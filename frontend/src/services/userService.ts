@@ -1,7 +1,8 @@
 import axios from 'axios';
 import type { User } from '../types/User';
+import { act } from 'react';
 
-const BASE_URL = 'http://localhost:8081'; // Changed to new Spring Boot port
+const BASE_URL = 'http://localhost:8081';
 const API_URL = `${BASE_URL}/api/users`;
 
 export const userService = {
@@ -14,7 +15,12 @@ export const userService = {
         const response = await axios.get(API_URL);
         return response.data;
     },
-
+    
+    getAllActiveUsers: async () => {
+        const response = await axios.get(`${API_URL}/active`);
+        return response.data;
+    },
+    
     getUserById: async (id: string) => {
         const response = await axios.get(`${API_URL}/${id}`);
         return response.data;
