@@ -1,0 +1,37 @@
+import axios from 'axios';
+import type { User } from '../types/User';
+
+const BASE_URL = 'http://localhost:8081'; // Changed to new Spring Boot port
+const API_URL = `${BASE_URL}/api/users`;
+
+export const userService = {
+    createUser: async (user: User) => {
+        const response = await axios.post(API_URL, user);
+        return response.data;
+    },
+
+    getAllUsers: async () => {
+        const response = await axios.get(API_URL);
+        return response.data;
+    },
+
+    getUserById: async (id: string) => {
+        const response = await axios.get(`${API_URL}/${id}`);
+        return response.data;
+    },
+
+    updateUser: async (id: string, user: User) => {
+        const response = await axios.put(`${API_URL}/${id}`, user);
+        return response.data;
+    },
+
+    softDeleteUser: async (id: string) => {
+        const response = await axios.put(`${API_URL}/${id}/soft`);
+        return response.data;
+    },
+
+    hardDeleteUser: async (id: string) => {
+        const response = await axios.delete(`${API_URL}/${id}/hard`);
+        return response.data;
+    }
+};
