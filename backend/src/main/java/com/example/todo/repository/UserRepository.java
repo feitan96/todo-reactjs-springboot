@@ -1,5 +1,7 @@
 package com.example.todo.repository;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -7,6 +9,10 @@ import org.springframework.data.jpa.repository.Query;
 import com.example.todo.entity.User;
 
 public interface  UserRepository extends JpaRepository<User, String> {
+    
+    //find all active users (not deleted)
+    @Query("SELECT u FROM User u WHERE u.isDeleted = false")
+    List<User> findAllActive();
     
     //find a user by email
     User findByEmail(String email);

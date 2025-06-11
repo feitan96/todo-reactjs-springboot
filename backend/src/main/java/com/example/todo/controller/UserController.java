@@ -33,14 +33,25 @@ public class UserController {
             return ResponseEntity.ok(createdUser);
         } catch (Exception e) {
             return ResponseEntity.status(500).body("Error creating user: " + e.getMessage());
-        }   
+        }       
     }
 
-    //READ all
+    //READ all active (not deleted)
     @GetMapping
     public ResponseEntity<List<User>> getAllUsers() {
         try {
             List<User> users = userService.getAllUsers();
+            return ResponseEntity.ok(users);
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body(null);
+        }
+    }
+
+    //READ all
+    @GetMapping("/active")
+    public ResponseEntity<List<User>> getAllActiveUsers() {
+        try {
+            List<User> users = userService.getAllActiveUsers();
             return ResponseEntity.ok(users);
         } catch (Exception e) {
             return ResponseEntity.status(500).body(null);
