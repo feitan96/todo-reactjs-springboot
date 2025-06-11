@@ -1,5 +1,7 @@
 package com.example.todo.entity;
 
+import java.sql.Timestamp;
+
 import org.hibernate.annotations.UuidGenerator;
 
 import jakarta.persistence.Column;
@@ -37,4 +39,16 @@ public class User {
     
     @Column(name = "isDeleted", nullable = false)
     private Boolean isDeleted = false;
+    
+    @Column(name = "created_at", nullable = false)
+    private Timestamp created_at;
+
+    @Column(name = "updated_at", nullable = false)
+    private Timestamp updated_at;
+
+    public User() {
+        Timestamp now = new Timestamp(System.currentTimeMillis());
+        this.created_at = now;
+        this.updated_at = now;
+    }
 }
