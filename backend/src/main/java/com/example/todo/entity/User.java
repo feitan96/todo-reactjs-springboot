@@ -35,6 +35,6 @@ public class User {
     @Column(name = "password", nullable = false)
     private String password;
     
-    @Column(name = "is_deleted", nullable = false)
-    private Boolean is_deleted = false;
+    @Column(name = "isDeleted", nullable = false)
+    private Boolean isDeleted = false;
 }

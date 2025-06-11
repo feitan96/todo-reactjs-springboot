@@ -18,7 +18,6 @@ import com.example.todo.service.UserService;
 
 import jakarta.validation.Valid;
 
-
 @RestController
 @RequestMapping("/api/users")
 public class UserController {
@@ -37,7 +36,7 @@ public class UserController {
         }   
     }
 
-    //READ
+    //READ all
     @GetMapping
     public ResponseEntity<List<User>> getAllUsers() {
         try {
@@ -61,7 +60,9 @@ public class UserController {
         } catch (Exception e) {
             return ResponseEntity.status(500).body(null);
         }
-    }    //UPDATE
+    }    
+    
+    //UPDATE
     @PutMapping("/{id}")
     public ResponseEntity<?> updateUser(@PathVariable String id, @Valid @RequestBody User user) {
         try {
@@ -85,7 +86,9 @@ public class UserController {
         } catch (Exception e) {
             return ResponseEntity.status(500).body("Error soft deleting user: " + e.getMessage());
         }
-    }    //HARD DELETE
+    }    
+    
+    //HARD DELETE
     @DeleteMapping("/{id}/hard")
     public ResponseEntity<?> hardDeleteUser(@PathVariable String id) {
         try {
