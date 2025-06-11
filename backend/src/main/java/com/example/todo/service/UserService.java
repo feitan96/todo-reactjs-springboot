@@ -25,6 +25,11 @@ public class UserService {
     }
 
     public User createUser(User user) {
+        if (userRepository.existsByEmail(user.getEmail())) {
+            return null;
+        }
+
+        user.setId(null); 
         return userRepository.save(user);
     }
 
