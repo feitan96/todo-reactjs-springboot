@@ -1,6 +1,5 @@
 import axios from 'axios';
 import type { User } from '../types/User';
-import { act } from 'react';
 
 const BASE_URL = 'http://localhost:8081';
 const API_URL = `${BASE_URL}/api/users`;
