@@ -2,9 +2,11 @@ import axios from 'axios';
 import type { User } from '../types/User';
 
 const BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
 if (!BASE_URL) {
     throw new Error('VITE_API_BASE_URL environment variable is not set');
 }
+
 const API_URL = `${BASE_URL}/api/users`;
 
 export const userService = {
