@@ -7,7 +7,7 @@ export const useUser = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
 
-    //fetch all users from the backend (controller)
+    //fetch all active (non-soft-deleted) users from the userService
     const fetchUsers = async () => {
         try {
             setLoading(true);
@@ -18,7 +18,6 @@ export const useUser = () => {
             setError(err instanceof Error ? err.message : 'Failed to fetch users');
             setUsers([]);
         } finally {
-
             setLoading(false);
         }
     }
