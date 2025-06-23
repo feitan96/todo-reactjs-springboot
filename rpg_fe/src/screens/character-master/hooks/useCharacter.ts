@@ -10,11 +10,11 @@ export const useCharacters = () => {
   useEffect(() => {
     getAllCharacters()
       .then(data => {
-        console.log('Fetched characters:', data); // <-- Add this
+        console.log('Fetched characters:', data);
         setCharacters(Array.isArray(data) ? data : []);
       })
       .catch((err) => {
-        console.error('Fetch error:', err); // <-- Add this
+        console.error('Fetch error:', err);
         setError('Failed to fetch characters');
       })
       .finally(() => setLoading(false));
