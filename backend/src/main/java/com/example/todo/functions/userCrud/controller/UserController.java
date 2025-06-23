@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.todo.entity.User;
-import com.example.todo.service.UserService;
+import com.example.todo.functions.userCrud.entity.User;
+import com.example.todo.functions.userCrud.service.UserService;
 
 import jakarta.validation.Valid;
 
