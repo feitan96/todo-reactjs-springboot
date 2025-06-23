@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useCharacters } from "./hooks/useCharacter";
+import { useCharacters, useCharactersPaginated } from "./hooks/useCharacter";
 import CharacterTable from "./components/CharacterTable";
 import CharacterDetailsModal from "./components/CharacterDetailsModal";
 import AppButton from "../../components/button/button";
@@ -15,11 +15,20 @@ import {
 } from "./services/characterService";
 
 const CharacterMaster: React.FC = () => {
-  const { characters, loading, error } = useCharacters();
+  // const { characters, loading, error } = useCharacters();
   const [showCreate, setShowCreate] = useState(false);
   const [refresh, setRefresh] = useState(0);
   const [viewCharacter, setViewCharacter] = useState(null);
-    const [editCharacter, setEditCharacter] = useState<Character | null>(null);
+  const [editCharacter, setEditCharacter] = useState<Character | null>(null);
+  const {
+    characters,
+    total,
+    loading,
+    error,
+    page,
+    setPage,
+    pageSize,
+  } = useCharactersPaginated(refresh);
 
   // Refetch characters after creation
   const refetchCharacters = () => setRefresh((r) => r + 1);
@@ -55,6 +64,11 @@ const CharacterMaster: React.FC = () => {
       />
       <CharacterTable
         characters={characters}
+        total={total}
+        page={page}
+        pageSize={pageSize}
+        loading={loading}
+        onPageChange={setPage}
         onView={setViewCharacter}
         onEdit={setEditCharacter}
       />

@@ -9,6 +9,29 @@ export const getAllCharacters = async (): Promise<Character[]> => {
     return Array.isArray(response.data) ? response.data : [];
 };
 
+//Rerieves all characters from the API in a paginated format.
+// The response includes the content (array of characters), total elements, total pages, current page
+export interface PaginatedResponse<T> {
+  content: T[];
+  totalElements: number;
+  totalPages: number;
+  number: number;
+  size: number;
+}
+
+// Fetches characters in a paginated format
+export const getCharactersPaginated = async (
+  page: number,
+  size: number,
+  sortBy = 'id',
+  sortDirection = 'asc'
+): Promise<PaginatedResponse<Character>> => {
+  const response = await axios.get(`${API_BASE}/paginated`, {
+    params: { page, size, sortBy, sortDirection },
+  });
+  return response.data;
+};
+
 // Fetch a single character by ID
 export const createCharacter = async (
   character: Omit<Character, 'id' | 'createdAt' | 'updatedAt'>
