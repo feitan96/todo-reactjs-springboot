@@ -4,16 +4,39 @@ import CharacterTable from "./components/CharacterTable";
 import CharacterDetailsModal from "./components/CharacterDetailsModal";
 import AppButton from "../../components/button/button";
 import CharacterCreateForm from "./components/CharacterCreateForm";
-import { createCharacter } from "./services/characterService";
+import CharacterEditModal from "./components/CharacterEditModal";
+import type { Character } from "./types/character";
+
+import { 
+  createCharacter,
+  updateCharacter,
+  softDeleteCharacter,
+  hardDeleteCharacter 
+} from "./services/characterService";
 
 const CharacterMaster: React.FC = () => {
   const { characters, loading, error } = useCharacters();
   const [showCreate, setShowCreate] = useState(false);
   const [refresh, setRefresh] = useState(0);
   const [viewCharacter, setViewCharacter] = useState(null);
+    const [editCharacter, setEditCharacter] = useState<Character | null>(null);
 
   // Refetch characters after creation
   const refetchCharacters = () => setRefresh((r) => r + 1);
+
+  // Handle soft deletion of character
+  const handleSoftDelete = async (id: number) => {
+    await softDeleteCharacter(id);
+    setViewCharacter(null);
+    refetchCharacters();
+  };
+
+  // Handle hard deletion of character
+  const handleHardDelete = async (id: number) => {
+    await hardDeleteCharacter(id);
+    setViewCharacter(null);
+    refetchCharacters();
+  };
 
   return (
     <div>
@@ -33,14 +56,27 @@ const CharacterMaster: React.FC = () => {
       <CharacterTable
         characters={characters}
         onView={setViewCharacter}
-        onEdit={(char) => {
-          /* TODO: implement edit modal */
-        }}
+        onEdit={setEditCharacter}
       />
       <CharacterDetailsModal
         visible={!!viewCharacter}
         character={viewCharacter}
         onClose={() => setViewCharacter(null)}
+        onSoftDelete={handleSoftDelete}
+        onHardDelete={handleHardDelete}
+        onEdit={setEditCharacter}
+      />
+      <CharacterEditModal
+        visible={!!editCharacter}
+        character={editCharacter}
+        onCancel={() => setEditCharacter(null)}
+        onSave={async (values) => {
+          if (editCharacter) {
+            await updateCharacter(editCharacter.id, values);
+            setEditCharacter(null);
+            refetchCharacters();
+          }
+        }}
       />
     </div>
   );
